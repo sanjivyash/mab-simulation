@@ -209,4 +209,4 @@ if args.task == 4:
 
 
 if args.plot:
-  os.system(f'python plot.py --file {outfile}')
+  os.system(f'python plot.py --file {outfile} --task {args.task}')

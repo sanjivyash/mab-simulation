@@ -11,9 +11,18 @@ parser.add_argument(
   help="path to output files like t1-out.txt for task 1"
 )
 
-infile = parser.parse_args().file
-assert os.path.isfile(infile), "invalid file path specified"
-task   = infile.split("/")[-1].split("-")[0][1]
+parser.add_argument(
+  "--task", type=int,
+  metavar="task", default=None,
+  help="task number to plot"
+)
+
+args   = parser.parse_args()
+assert 1 <= args.task <= 4, "tasks numbered 1 to 4"
+assert os.path.isfile(args.file), "invalid file path specified"
+
+infile = args.file
+task   = args.task
 
 def parse(line):
   args = line.split(", ")
@@ -29,7 +38,7 @@ def parse(line):
     "highs"       : int(args[8])
   }
 
-if task == "1":
+if task == 1:
   # instance -> algorithm -> horizon -> seed
   plotobj = defaultdict(
     lambda : defaultdict(
@@ -68,7 +77,7 @@ if task == "1":
     plt.legend()
 
 
-if task == "2":
+if task == 2:
   # instance -> scale -> seed
   plotobj = defaultdict(
     lambda : defaultdict(
@@ -98,7 +107,7 @@ if task == "2":
   plt.legend()
 
 
-if task == "3":
+if task == 3:
   # instance -> scale -> horizon -> seed
   plotobj = defaultdict(
     lambda : defaultdict(
@@ -137,7 +146,7 @@ if task == "3":
     plt.legend()
 
 
-if task == "4":
+if task == 4:
   # instance -> threshold -> horizon -> seed
   plotobj = defaultdict(
     lambda : defaultdict(
